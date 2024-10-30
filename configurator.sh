@@ -1,20 +1,18 @@
 #!/bin/bash
 
-# Ensure Zsh is installed
-if ! command -v zsh &> /dev/null; then
-  echo "Zsh is not installed. Installing Zsh..."
-  sudo apt update && sudo apt install -y zsh
-else
-  echo "Zsh is already installed."
-fi
-
 # Define your preferred theme and plugins
 ZSH_THEME="darkblood"
 PLUGINS=(git zsh-autosuggestions zsh-syntax-highlighting jsontools dirhistory)
 
+# Ensure Oh My Zsh directory exists for the current user
+ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+  echo "Oh My Zsh is not installed for the current user. Please run install-zsh.sh first."
+  exit 1
+fi
+
 # Download plugins if they don't already exist
 echo "Downloading plugins..."
-ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
 mkdir -p "$ZSH_CUSTOM/plugins"
 
 for plugin in "${PLUGINS[@]}"; do
@@ -31,22 +29,20 @@ for plugin in "${PLUGINS[@]}"; do
       ;;
     jsontools)
       if [ ! -d "$ZSH_CUSTOM/plugins/jsontools" ]; then
-        git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh"
-        cp -r "$HOME/.oh-my-zsh/plugins/jsontools" "$ZSH_CUSTOM/plugins/jsontools"
+        git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh-temp"
+        cp -r "$HOME/.oh-my-zsh-temp/plugins/jsontools" "$ZSH_CUSTOM/plugins/jsontools"
+        rm -rf "$HOME/.oh-my-zsh-temp"
       fi
       ;;
     dirhistory)
       if [ ! -d "$ZSH_CUSTOM/plugins/dirhistory" ]; then
-        git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh"
-        cp -r "$HOME/.oh-my-zsh/plugins/dirhistory" "$ZSH_CUSTOM/plugins/dirhistory"
+        git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh-temp"
+        cp -r "$HOME/.oh-my-zsh-temp/plugins/dirhistory" "$ZSH_CUSTOM/plugins/dirhistory"
+        rm -rf "$HOME/.oh-my-zsh-temp"
       fi
       ;;
   esac
 done
-
-# Install Oh My Zsh in non-interactive mode
-echo "Installing Oh My Zsh..."
-RUNZSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Apply configuration to .zshrc
 ZSHRC_PATH="$HOME/.zshrc"
@@ -62,10 +58,8 @@ plugins=(${PLUGINS[*]})
 source \$ZSH/oh-my-zsh.sh
 EOF
 
-# Set Zsh as default shell for current user
-echo "Setting Zsh as the default shell..."
-sudo chsh -s "$(which zsh)" "$USER"
+# Source the new .zshrc configuration to apply changes immediately
+echo "Sourcing .zshrc to apply changes..."
+source "$ZSHRC_PATH"
 
-# Start a new Zsh session
-echo "Reloading Zsh..."
-exec zsh
+echo "Configuration complete. Zsh configuration has been applied."
