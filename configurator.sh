@@ -4,9 +4,11 @@
 ZSH_THEME="darkblood"
 PLUGINS=(git zsh-autosuggestions zsh-syntax-highlighting jsontools dirhistory)
 
-# Ensure Oh My Zsh is installed for the current user
-ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
-if [ ! -d "$HOME/.oh-my-zsh" ]; then
+# Set Oh My Zsh custom path
+ZSH_CUSTOM="/home/$USER/.oh-my-zsh/custom"
+
+# Verify Oh My Zsh installation by checking for the oh-my-zsh.sh script
+if [ ! -f "/home/$USER/.oh-my-zsh/oh-my-zsh.sh" ]; then
   echo "Oh My Zsh is not installed for the current user. Please run install-zsh.sh first."
   exit 1
 fi
