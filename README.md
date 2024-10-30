@@ -9,4 +9,4 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 git clone https://github.com/imperror/myzsh<br>
 cd myzsh<br>
 sudo chmod +x configurator.sh<br>
-sudo ./configurator.sh<br>
+./configurator.sh<br>
