@@ -4,6 +4,15 @@
 ZSH_THEME="darkblood"
 PLUGINS=(git zsh-autosuggestions zsh-syntax-highlighting jsontools dirhistory)
 
+
+# Prevent running as root or with sudo
+if [ "$(id -u)" = "0" ]; then
+  echo "This script should not be run as root or with sudo."
+  echo "Please run it as a regular user without elevated privileges."
+  exit 1
+fi
+
+
 # Set Oh My Zsh custom path
 ZSH_CUSTOM="/home/$USER/.oh-my-zsh/custom"
 
