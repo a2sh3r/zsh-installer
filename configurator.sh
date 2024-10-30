@@ -29,16 +29,18 @@ for plugin in "${PLUGINS[@]}"; do
       ;;
     jsontools)
       if [ ! -d "$ZSH_CUSTOM/plugins/jsontools" ]; then
-        git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh-temp"
-        cp -r "$HOME/.oh-my-zsh-temp/plugins/jsontools" "$ZSH_CUSTOM/plugins/jsontools"
-        rm -rf "$HOME/.oh-my-zsh-temp"
+        TEMP_DIR=$(mktemp -d)
+        git clone https://github.com/ohmyzsh/ohmyzsh.git "$TEMP_DIR"
+        cp -r "$TEMP_DIR/plugins/jsontools" "$ZSH_CUSTOM/plugins/jsontools"
+        rm -rf "$TEMP_DIR"
       fi
       ;;
     dirhistory)
       if [ ! -d "$ZSH_CUSTOM/plugins/dirhistory" ]; then
-        git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh-temp"
-        cp -r "$HOME/.oh-my-zsh-temp/plugins/dirhistory" "$ZSH_CUSTOM/plugins/dirhistory"
-        rm -rf "$HOME/.oh-my-zsh-temp"
+        TEMP_DIR=$(mktemp -d)
+        git clone https://github.com/ohmyzsh/ohmyzsh.git "$TEMP_DIR"
+        cp -r "$TEMP_DIR/plugins/dirhistory" "$ZSH_CUSTOM/plugins/dirhistory"
+        rm -rf "$TEMP_DIR"
       fi
       ;;
   esac
@@ -58,8 +60,6 @@ plugins=(${PLUGINS[*]})
 source \$ZSH/oh-my-zsh.sh
 EOF
 
-# Source the new .zshrc configuration to apply changes immediately
-echo "Sourcing .zshrc to apply changes..."
-source "$ZSHRC_PATH"
-
-echo "Configuration complete. Zsh configuration has been applied."
+# Start a new Zsh session to apply the configuration
+echo "Starting a new Zsh session to apply changes..."
+exec zsh
