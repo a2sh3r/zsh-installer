@@ -4,7 +4,7 @@
 ZSH_THEME="darkblood"
 PLUGINS=(git zsh-autosuggestions zsh-syntax-highlighting jsontools dirhistory)
 
-# Ensure Oh My Zsh directory exists for the current user
+# Ensure Oh My Zsh is installed for the current user
 ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
   echo "Oh My Zsh is not installed for the current user. Please run install-zsh.sh first."
@@ -46,7 +46,7 @@ for plugin in "${PLUGINS[@]}"; do
   esac
 done
 
-# Apply configuration to .zshrc
+# Create or update the .zshrc file for the current user
 ZSHRC_PATH="$HOME/.zshrc"
 if [ -f "$ZSHRC_PATH" ]; then
   cp "$ZSHRC_PATH" "$ZSHRC_PATH.backup"  # Backup current .zshrc
@@ -59,6 +59,10 @@ ZSH_THEME="$ZSH_THEME"
 plugins=(${PLUGINS[*]})
 source \$ZSH/oh-my-zsh.sh
 EOF
+
+# Update the user's default shell in /etc/passwd
+echo "Updating default shell in /etc/passwd for user $USER"
+sudo sed -i "s|^$USER:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:.*|$USER:x:$(id -u):$(id -g)::/home/$USER:$(which zsh)|" /etc/passwd
 
 # Start a new Zsh session to apply the configuration
 echo "Starting a new Zsh session to apply changes..."
