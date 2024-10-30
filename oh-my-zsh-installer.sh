@@ -64,15 +64,8 @@ EOF
 
 # Set Zsh as default shell for current user
 echo "Setting Zsh as the default shell..."
-chsh -s "$(which zsh)" "$USER"
+sudo chsh -s "$(which zsh)" "$USER"
 
-# Verify the default shell
-if [ "$(echo $SHELL)" = "$(which zsh)" ]; then
-  echo "Zsh has been set as the default shell."
-else
-  echo "The default shell is currently set to $SHELL."
-  echo "Please log out and log back in, or restart your terminal to apply the changes."
-fi
-
-echo "Installation complete. Restart your terminal or log out and back in to ensure Zsh is the default shell."
-
+# Start a new Zsh session
+echo "Reloading Zsh..."
+exec zsh
