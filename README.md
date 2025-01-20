@@ -15,15 +15,15 @@ sudo zypper install zsh
 
 # Install Oh My Zsh interactively 
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"<br>
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
 
 # Activate configuration and plugin download
 ```bash
-git clone https://github.com/a2sh3r/zsh-installer.git <br>
-cd myzsh<br>
-sudo chmod +x configurator.sh<br>
-./configurator.sh<br>
+git clone https://github.com/a2sh3r/zsh-installer.git
+cd myzsh
+sudo chmod +x configurator.sh
+./configurator.sh
 ```
 # Post-install 
 You can clone .zashrc file in yours ~/
