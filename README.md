@@ -25,3 +25,8 @@ cd myzsh<br>
 sudo chmod +x configurator.sh<br>
 ./configurator.sh<br>
 ```
+# Post-install 
+You can clone .zashrc file in yours ~/
+```bash
+cp .zshrc ~/
+```
