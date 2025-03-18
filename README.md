@@ -21,7 +21,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 # Activate configuration and plugin download
 ```bash
 git clone https://github.com/a2sh3r/zsh-installer.git
-cd myzsh
+cd zsh-installer
 sudo chmod +x configurator.sh
 ./configurator.sh
 ```
